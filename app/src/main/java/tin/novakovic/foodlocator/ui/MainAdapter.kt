@@ -10,7 +10,7 @@ import tin.novakovic.foodlocator.R
 import tin.novakovic.foodlocator.core.user_case_layer.Restaurant
 import tin.novakovic.foodlocator.ui.MainAdapter.*
 
-class MainAdapter() :
+class MainAdapter :
     RecyclerView.Adapter<RestaurantViewHolder>() {
 
     private var restaurants: List<Restaurant> = listOf()
@@ -41,10 +41,7 @@ class MainAdapter() :
             Picasso.get()
                 .load(restaurant.logo)
                 .into(itemView.restaurant_logo)
-
         }
-
     }
-
 
 }

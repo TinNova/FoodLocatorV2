@@ -1,3 +1,17 @@
 <resources>
     <string name="app_name">FoodLocator</string>
+
+    <string name="location_error">Location Not Found</string>
+    <string name="location_permission_error">Permission To Access Location Was Denied</string>
+
+    <string name="empty_restaurant_list">PostCode/Location Not Recognised</string>
+    <string name="network_error">Network Error, Try Again</string>
+    <string name="postcode_error">PostCode Not Recognised</string>
+
+    <!--  MainActivity  -->
+    <string name="postcode_hint">Enter Postcode</string>
+    <string name="search_button">Search</string>
+    <string name="location_button">Search By Your Location</string>
+
+
 </resources>

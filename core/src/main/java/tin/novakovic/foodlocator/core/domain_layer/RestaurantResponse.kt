@@ -2,13 +2,13 @@ package tin.novakovic.foodlocator.core.domain_layer
 import com.google.gson.annotations.SerializedName
 
 
-data class PostCodeResponse(
+data class RestaurantResponse(
     @SerializedName("Area")
     val area: String = "",
     @SerializedName("MetaData")
     val metaData: MetaData = MetaData(),
     @SerializedName("Restaurants")
-    val restaurants: List<Restaurant> = listOf(),
+    val restaurants: List<OldRestaurant> = listOf(),
     @SerializedName("RestaurantSets")
     val restaurantSets: List<RestaurantSet> = listOf(),
     @SerializedName("CuisineSets")
@@ -66,7 +66,7 @@ data class TagDetail(
     val priority: Int = 0
 )
 
-data class Restaurant(
+data class OldRestaurant(
     @SerializedName("Id")
     val id: Int = 0,
     @SerializedName("Name")

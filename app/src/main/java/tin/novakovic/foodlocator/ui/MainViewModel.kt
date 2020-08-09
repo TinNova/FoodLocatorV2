@@ -4,12 +4,13 @@ import androidx.lifecycle.MutableLiveData
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import tin.novakovic.foodlocator.DisposingViewModel
-import tin.novakovic.foodlocator.core.user_case_layer.PostCodeHelper
+import tin.novakovic.foodlocator.R
+import tin.novakovic.foodlocator.core.user_case_layer.RestaurantHelper
 import tin.novakovic.foodlocator.core.user_case_layer.Restaurant
 import tin.novakovic.foodlocator.removeWhiteSpaces
 import javax.inject.Inject
 
-class MainViewModel @Inject constructor(private val postCodeHelper: PostCodeHelper) :
+class MainViewModel @Inject constructor(private val restaurantHelper: RestaurantHelper) :
     DisposingViewModel() {
 
     val viewState = MutableLiveData<MainViewState>()
@@ -19,32 +20,53 @@ class MainViewModel @Inject constructor(private val postCodeHelper: PostCodeHelp
             if (it.isNotBlank()) {
                 fetchRestaurants(it)
             } else {
-                onError("PostCode Not Recognised")
+                onError(R.string.postcode_error)
             }
         }
     }
 
-    private fun fetchRestaurants(outCode: String) {
-
+    fun onLocationClicked(latitude: Double, longitude: Double) {
         viewState.value = Loading
         add(
-            postCodeHelper.fetchRestaurantsByOutCode(outCode)
+            restaurantHelper.fetchRestaurantsByLatLon(latitude, longitude)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
                     onRestaurantsLoaded(it)
                 }, {
-                    onError("Network Error, Try Again")
+                    onError(R.string.network_error)
                 })
         )
     }
 
+    private fun fetchRestaurants(outCode: String) {
+        viewState.value = Loading
+        add(
+            restaurantHelper.fetchRestaurantsByOutCode(outCode)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({
+                    onRestaurantsLoaded(it)
+                }, {
+                    onError(R.string.network_error)
+                })
+        )
+    }
+
+    fun onLocationError() {
+        onError(R.string.location_error)
+    }
+
+    fun onLocationPermissionError() {
+        onError(R.string.location_permission_error)
+    }
+
     private fun onRestaurantsLoaded(it: List<Restaurant>) {
-        if (it.isEmpty()) onError("PostCode Not Recognised")
+        if (it.isEmpty()) onError(R.string.empty_restaurant_list)
         else viewState.value = Presenting(it)
     }
 
-    private fun onError(message: String) {
+    private fun onError(message: Int) {
         viewState.value = Error(message)
     }
 }
