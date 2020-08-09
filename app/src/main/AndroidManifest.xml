@@ -3,9 +3,6 @@
     package="tin.novakovic.foodlocator">
 
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 
     <application
         android:name=".App"
@@ -22,11 +19,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-        <service
-            android:name="tin.novakovic.foodlocator.ui.ForegroundOnlyLocationService"
-            android:enabled="true"
-            android:exported="false" />
     </application>
 
 </manifest>
