@@ -7,19 +7,19 @@
 
     <ImageView
         android:id="@+id/restaurant_logo"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
+        android:layout_width="@dimen/logo_size"
+        android:layout_height="@dimen/logo_size"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:layout_margin="8dp"/>
+        android:layout_margin="@dimen/margin_small"/>
 
     <TextView
         android:id="@+id/restaurant_name"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginEnd="32dp"
-        android:textSize="18sp"
+        android:layout_marginStart="@dimen/margin_big"
+        android:layout_marginEnd="@dimen/margin_big"
+        android:textSize="@dimen/font_size"
         android:textStyle="bold"
         android:maxLines="1"
         android:ellipsize="end"
@@ -32,8 +32,8 @@
         android:id="@+id/restaurant_foodType"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginEnd="32dp"
+        android:layout_marginStart="@dimen/margin_big"
+        android:layout_marginEnd="@dimen/margin_big"
         app:layout_constraintEnd_toStartOf="@+id/restaurant_rating"
         app:layout_constraintStart_toEndOf="@+id/restaurant_logo"
         app:layout_constraintTop_toBottomOf="@id/restaurant_name"
@@ -44,9 +44,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         tools:text="5.0"
-        android:textSize="18sp"
+        android:textSize="@dimen/font_size"
         android:textStyle="bold"
-        android:layout_marginEnd="32dp"
+        android:layout_marginEnd="@dimen/margin_big"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@id/restaurant_logo"
         app:layout_constraintBottom_toBottomOf="@id/restaurant_logo"/>

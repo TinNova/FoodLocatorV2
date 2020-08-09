@@ -1,13 +1,17 @@
 package tin.novakovic.foodlocator.ui
 
-import androidx.appcompat.app.AppCompatActivity
+import android.location.Location
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.location.LocationServices
 import kotlinx.android.synthetic.main.activity_main.*
 import tin.novakovic.foodlocator.*
 import javax.inject.Inject
+
 
 class MainActivity : AppCompatActivity() {
 
@@ -17,6 +21,7 @@ class MainActivity : AppCompatActivity() {
 
     private val adapter = MainAdapter()
 
+    private lateinit var fusedLocationClient: FusedLocationProviderClient
 
     override fun onCreate(savedInstanceState: Bundle?) {
         (application as App).appComponent.inject(this)
@@ -25,6 +30,7 @@ class MainActivity : AppCompatActivity() {
         viewModel = ViewModelProvider(this, viewModelFactory).get(MainViewModel::class.java)
 
         initView()
+
     }
 
     private fun initView() {
@@ -37,6 +43,25 @@ class MainActivity : AppCompatActivity() {
         search_button.setOnClickListener {
             viewModel.onSearchClicked(search_bar.text.toString())
         }
+
+        location_button.setOnClickListener {
+            // WE NEED TO CHECK IF APP HAS ACCESS TO LOCATION, IF NOT THEN REQUEST IT, ALSO
+            // IF THERE IS NO LASTLOCATION WE NEED TO RETREIVE THE CURRENT LOCATION
+            // THE REASON IT WORKED BEFORE IS BECAUSE THE CODELAB APP WAS RETRIEVING THE LOCATION AND OUR APP WAS USING THAT
+            fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
+
+            fusedLocationClient.lastLocation
+                .addOnSuccessListener { location: Location? ->
+                    if (location != null) {
+                        viewModel.onLocationClicked(location.latitude, location.longitude)
+                    } else {
+                        viewModel.onLocationError()
+                    }
+                }
+                .addOnFailureListener {
+                    it
+                }
+        }
     }
 
     private fun observeViewState() {
@@ -48,28 +73,26 @@ class MainActivity : AppCompatActivity() {
                         rv_main_activity.visible()
                         loading_icon_main_activity.gone()
                         network_main_activity.gone()
+                        location_button.gone()
                     }
                     is Error -> {
                         rv_main_activity.gone()
                         loading_icon_main_activity.gone()
                         network_main_activity.visible()
-                        network_main_activity.text = it.message
+                        network_main_activity.text = getString(it.message)
+                        location_button.gone()
                     }
                     is Loading -> {
                         rv_main_activity.gone()
                         loading_icon_main_activity.visible()
                         network_main_activity.gone()
+                        location_button.gone()
                     }
                 }
             }
         })
     }
 
-    // Setup GPS
-    // --> https://developer.android.com/training/location
-    // --> https://developer.android.com/reference/android/location/LocationManager
-
     // Write Tests
     // Look at the OkHttp Testing
-    // Remove all hardcoded text in ViewModel and xmls
 }
