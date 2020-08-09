@@ -58,8 +58,7 @@ class MainViewModelUnitTest {
 
         //then
         assertEquals(
-            Presenting(mockRestaurants)
-            , target.viewState.value
+            Presenting(mockRestaurants), target.viewState.value
         )
     }
 
@@ -79,8 +78,7 @@ class MainViewModelUnitTest {
 
         //then
         assertEquals(
-            Error(R.string.empty_restaurant_list)
-            , target.viewState.value
+            Error(R.string.empty_restaurant_list), target.viewState.value
         )
     }
 
@@ -99,8 +97,7 @@ class MainViewModelUnitTest {
 
         //then
         assertEquals(
-            Error(R.string.network_error)
-            , target.viewState.value
+            Error(R.string.network_error), target.viewState.value
         )
     }
 
@@ -114,8 +111,7 @@ class MainViewModelUnitTest {
 
         //then
         assertEquals(
-            Error(R.string.postcode_error)
-            , target.viewState.value
+            Error(R.string.postcode_error), target.viewState.value
         )
     }
 
@@ -155,8 +151,7 @@ class MainViewModelUnitTest {
 
         //then
         assertEquals(
-            Error(R.string.empty_restaurant_list)
-            , target.viewState.value
+            Error(R.string.empty_restaurant_list), target.viewState.value
         )
     }
 
@@ -175,8 +170,7 @@ class MainViewModelUnitTest {
 
         //then
         assertEquals(
-            Error(R.string.network_error)
-            , target.viewState.value
+            Error(R.string.network_error), target.viewState.value
         )
     }
 
@@ -188,8 +182,19 @@ class MainViewModelUnitTest {
 
         //then
         assertEquals(
-            Error(R.string.location_error)
-            , target.viewState.value
+            Error(R.string.location_error), target.viewState.value
+        )
+    }
+
+    @Test
+    fun onLocationPermissionError_assertError() {
+        //given
+        //when
+        target.onLocationPermissionError()
+
+        //then
+        assertEquals(
+            Error(R.string.location_permission_error), target.viewState.value
         )
     }
 }

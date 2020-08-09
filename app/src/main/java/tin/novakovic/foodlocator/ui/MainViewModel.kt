@@ -57,6 +57,10 @@ class MainViewModel @Inject constructor(private val restaurantHelper: Restaurant
         onError(R.string.location_error)
     }
 
+    fun onLocationPermissionError() {
+        onError(R.string.location_permission_error)
+    }
+
     private fun onRestaurantsLoaded(it: List<Restaurant>) {
         if (it.isEmpty()) onError(R.string.empty_restaurant_list)
         else viewState.value = Presenting(it)

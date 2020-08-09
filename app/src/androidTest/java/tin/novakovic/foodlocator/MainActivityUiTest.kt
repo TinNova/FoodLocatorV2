@@ -43,4 +43,12 @@ class MainActivityEspressoTest {
         assertNotDisplayed(R.id.location_button)
     }
 
+    // Test passes only if location is pre-enabled on the device
+    @Test
+    fun clickLocationButton_displayRecyclerView() {
+        clickOn(R.id.location_button)
+        assertDisplayed(R.id.rv_main_activity)
+        assertNotDisplayed(R.id.location_button)
+    }
+
 }
