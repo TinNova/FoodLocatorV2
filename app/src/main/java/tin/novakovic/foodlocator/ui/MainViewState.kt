@@ -9,4 +9,8 @@ data class Presenting(val restaurant: List<Restaurant>) : MainViewState()
 
 data class Error(@StringRes val message: Int) : MainViewState()
 
+object LocationPermitted: MainViewState()
+
+object LocationNotPermitted: MainViewState()
+
 object Loading : MainViewState()

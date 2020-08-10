@@ -127,7 +127,7 @@ class MainViewModelUnitTest {
         )
 
         //when
-        target.onLocationClicked(latitude, longitude)
+        target.onLocationResultSuccess(latitude, longitude)
 
         //then
         assertEquals(
@@ -147,7 +147,7 @@ class MainViewModelUnitTest {
         )
 
         //when
-        target.onLocationClicked(latitude, longitude)
+        target.onLocationResultSuccess(latitude, longitude)
 
         //then
         assertEquals(
@@ -166,7 +166,7 @@ class MainViewModelUnitTest {
         )
 
         //when
-        target.onLocationClicked(latitude, longitude)
+        target.onLocationResultSuccess(latitude, longitude)
 
         //then
         assertEquals(
@@ -197,4 +197,44 @@ class MainViewModelUnitTest {
             Error(R.string.location_permission_error), target.viewState.value
         )
     }
+
+    @Test
+    fun onLocationButtonClicked_true_assertLocationPermitted() {
+        //given
+        val isLocationPermissionApproved = true
+
+        //when
+        target.onLocationButtonClicked(isLocationPermissionApproved)
+
+        //then
+        assertEquals(
+            LocationPermitted, target.viewState.value
+        )
+    }
+
+    @Test
+    fun onLocationButtonClicked_false_assertLocationNotPermitted() {
+        //given
+        val isLocationPermissionApproved = false
+
+        //when
+        target.onLocationButtonClicked(isLocationPermissionApproved)
+
+        //then
+        assertEquals(
+            LocationNotPermitted, target.viewState.value
+        )
+    }
+
+    @Test
+    fun onLocationPermissionGranted_assertLocationPermitted() {
+        //given
+        //when
+        target.onLocationPermissionGranted()
+
+        //then
+        assertEquals(LocationPermitted, target.viewState.value)
+
+    }
+
 }

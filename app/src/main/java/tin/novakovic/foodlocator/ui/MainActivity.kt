@@ -13,6 +13,7 @@ import com.google.android.gms.location.*
 import kotlinx.android.synthetic.main.activity_main.*
 import tin.novakovic.foodlocator.*
 import tin.novakovic.foodlocator.R
+import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 class MainActivity : AppCompatActivity() {
@@ -39,7 +40,7 @@ class MainActivity : AppCompatActivity() {
                 super.onLocationResult(locationResult)
 
                 locationResult?.let {
-                    viewModel.onLocationClicked(
+                    viewModel.onLocationResultSuccess(
                         it.lastLocation.latitude,
                         it.lastLocation.longitude
                     )
@@ -63,11 +64,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         location_button.setOnClickListener {
-            if (locationPermissionApproved()) {
-                onLocationIsAvailable()
-            } else {
-                requestLocationPermissions()
-            }
+            viewModel.onLocationButtonClicked(locationPermissionApproved())
         }
     }
 
@@ -81,6 +78,7 @@ class MainActivity : AppCompatActivity() {
                         loading_icon_main_activity.gone()
                         network_main_activity.gone()
                         location_button.gone()
+                        terminateLocationSubscription()
                     }
                     is Error -> {
                         rv_main_activity.gone()
@@ -94,6 +92,12 @@ class MainActivity : AppCompatActivity() {
                         loading_icon_main_activity.visible()
                         network_main_activity.gone()
                         location_button.gone()
+                    }
+                    is LocationPermitted -> {
+                        fetchUserLocation()
+                    }
+                    is LocationNotPermitted -> {
+                        requestLocationPermissions()
                     }
                 }
             }
@@ -115,12 +119,15 @@ class MainActivity : AppCompatActivity() {
         )
     }
 
-    private fun onLocationIsAvailable() {
+    private fun fetchUserLocation() {
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
         locationRequest = LocationRequest().apply {
-            priority = LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY
+            priority = LocationRequest.PRIORITY_HIGH_ACCURACY
+            interval = TimeUnit.SECONDS.toMillis(1)
             numUpdates = 1
+
         }
+        locationRequest.interval
 
         fusedLocationClient.requestLocationUpdates(
             locationRequest,
@@ -138,7 +145,7 @@ class MainActivity : AppCompatActivity() {
             REQUEST_FOREGROUND_ONLY_PERMISSIONS_REQUEST_CODE -> when {
 
                 grantResults.isEmpty() -> viewModel.onLocationError()
-                grantResults[0] == PackageManager.PERMISSION_GRANTED -> onLocationIsAvailable()
+                grantResults[0] == PackageManager.PERMISSION_GRANTED -> viewModel.onLocationPermissionGranted()
 
                 else -> {
                     viewModel.onLocationPermissionError()
@@ -147,6 +154,10 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    private fun terminateLocationSubscription() {
+        fusedLocationClient.removeLocationUpdates(locationCallback)
+    }
+    
     companion object {
         private const val REQUEST_FOREGROUND_ONLY_PERMISSIONS_REQUEST_CODE = 34
     }

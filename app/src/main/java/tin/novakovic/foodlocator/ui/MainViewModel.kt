@@ -25,7 +25,19 @@ class MainViewModel @Inject constructor(private val restaurantHelper: Restaurant
         }
     }
 
-    fun onLocationClicked(latitude: Double, longitude: Double) {
+    fun onLocationButtonClicked(isLocationPermissionApproved: Boolean) {
+        if (isLocationPermissionApproved) {
+            viewState.value = LocationPermitted
+        } else {
+            viewState.value = LocationNotPermitted
+        }
+    }
+
+    fun onLocationPermissionGranted() {
+        viewState.value = LocationPermitted
+    }
+
+    fun onLocationResultSuccess(latitude: Double, longitude: Double) {
         viewState.value = Loading
         add(
             restaurantHelper.fetchRestaurantsByLatLon(latitude, longitude)
