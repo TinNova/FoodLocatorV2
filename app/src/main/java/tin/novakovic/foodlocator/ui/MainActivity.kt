@@ -13,8 +13,10 @@ import com.google.android.gms.location.*
 import kotlinx.android.synthetic.main.activity_main.*
 import tin.novakovic.foodlocator.*
 import tin.novakovic.foodlocator.R
+import tin.novakovic.foodlocator.ui.LocationState.*
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
+import kotlin.Error
 
 class MainActivity : AppCompatActivity() {
 
@@ -35,6 +37,8 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         viewModel = ViewModelProvider(this, viewModelFactory).get(MainViewModel::class.java)
 
+        fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
+
         locationCallback = object : LocationCallback() {
             override fun onLocationResult(locationResult: LocationResult?) {
                 super.onLocationResult(locationResult)
@@ -54,8 +58,8 @@ class MainActivity : AppCompatActivity() {
 
     private fun initView() {
         observeViewState()
-        rv_main_activity.adapter = adapter
-        rv_main_activity.layoutManager = LinearLayoutManager(
+        recycler_view.adapter = adapter
+        recycler_view.layoutManager = LinearLayoutManager(
             this, LinearLayoutManager.VERTICAL, false
         )
 
@@ -68,38 +72,23 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+
     private fun observeViewState() {
         viewModel.viewState.observe(this, Observer {
-            it?.let {
-                when (it) {
-                    is Presenting -> {
-                        adapter.setData(it.restaurant)
-                        rv_main_activity.visible()
-                        loading_icon_main_activity.gone()
-                        network_main_activity.gone()
-                        location_button.gone()
-                        terminateLocationSubscription()
-                    }
-                    is Error -> {
-                        rv_main_activity.gone()
-                        loading_icon_main_activity.gone()
-                        network_main_activity.visible()
-                        network_main_activity.text = getString(it.message)
-                        location_button.gone()
-                    }
-                    is Loading -> {
-                        rv_main_activity.gone()
-                        loading_icon_main_activity.visible()
-                        network_main_activity.gone()
-                        location_button.gone()
-                    }
-                    is LocationPermitted -> {
-                        fetchUserLocation()
-                    }
-                    is LocationNotPermitted -> {
-                        requestLocationPermissions()
-                    }
+
+            recycler_view.show(it is MainViewState.Presenting)
+            loading_icon.show(it is MainViewState.Loading)
+            network_error_tv.show(it is Error)
+            location_button.show(it is LocationPermitted || it is LocationNotPermitted)
+
+            when (it) {
+                is MainViewState.Presenting -> {
+                    adapter.setData(it.restaurant)
+                    terminateLocationSubscription()
                 }
+                is MainViewState.Error -> network_error_tv.text = it.message.toString()
+                is LocationPermitted -> fetchUserLocation()
+                is LocationNotPermitted -> requestLocationPermissions()
             }
         })
     }
@@ -120,7 +109,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun fetchUserLocation() {
-        fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
         locationRequest = LocationRequest().apply {
             priority = LocationRequest.PRIORITY_HIGH_ACCURACY
             interval = TimeUnit.SECONDS.toMillis(1)
@@ -157,7 +145,7 @@ class MainActivity : AppCompatActivity() {
     private fun terminateLocationSubscription() {
         fusedLocationClient.removeLocationUpdates(locationCallback)
     }
-    
+
     companion object {
         private const val REQUEST_FOREGROUND_ONLY_PERMISSIONS_REQUEST_CODE = 34
     }

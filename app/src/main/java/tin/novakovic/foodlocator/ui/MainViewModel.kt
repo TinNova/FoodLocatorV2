@@ -8,7 +8,10 @@ import tin.novakovic.foodlocator.R
 import tin.novakovic.foodlocator.core.user_case_layer.RestaurantHelper
 import tin.novakovic.foodlocator.core.user_case_layer.Restaurant
 import tin.novakovic.foodlocator.removeWhiteSpaces
+import tin.novakovic.foodlocator.ui.LocationState.*
+import tin.novakovic.foodlocator.ui.MainViewState.*
 import javax.inject.Inject
+import kotlin.Error
 
 class MainViewModel @Inject constructor(private val restaurantHelper: RestaurantHelper) :
     DisposingViewModel() {

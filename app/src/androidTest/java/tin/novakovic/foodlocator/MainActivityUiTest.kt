@@ -31,7 +31,7 @@ class MainActivityEspressoTest {
     fun enterPostCode_clickSearchButton_displayRecyclerView() {
         writeTo(R.id.search_bar, "sw8")
         clickOn(R.id.search_button)
-        assertDisplayed(R.id.rv_main_activity)
+        assertDisplayed(R.id.recycler_view)
         assertNotDisplayed(R.id.location_button)
     }
 
@@ -47,7 +47,7 @@ class MainActivityEspressoTest {
     @Test
     fun clickLocationButton_displayRecyclerView() {
         clickOn(R.id.location_button)
-        assertDisplayed(R.id.rv_main_activity)
+        assertDisplayed(R.id.recycler_view)
         assertNotDisplayed(R.id.location_button)
     }
 
