@@ -11,7 +11,6 @@ import tin.novakovic.foodlocator.removeWhiteSpaces
 import tin.novakovic.foodlocator.ui.LocationState.*
 import tin.novakovic.foodlocator.ui.MainViewState.*
 import javax.inject.Inject
-import kotlin.Error
 
 class MainViewModel @Inject constructor(private val restaurantHelper: RestaurantHelper) :
     DisposingViewModel() {
@@ -82,6 +81,6 @@ class MainViewModel @Inject constructor(private val restaurantHelper: Restaurant
     }
 
     private fun onError(message: Int) {
-        viewState.value = Error(message)
+        viewState.value = Erroring(message)
     }
 }

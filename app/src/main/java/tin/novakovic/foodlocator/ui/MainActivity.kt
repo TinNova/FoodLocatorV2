@@ -14,9 +14,9 @@ import kotlinx.android.synthetic.main.activity_main.*
 import tin.novakovic.foodlocator.*
 import tin.novakovic.foodlocator.R
 import tin.novakovic.foodlocator.ui.LocationState.*
+import tin.novakovic.foodlocator.ui.MainViewState.*
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
-import kotlin.Error
 
 class MainActivity : AppCompatActivity() {
 
@@ -76,17 +76,17 @@ class MainActivity : AppCompatActivity() {
     private fun observeViewState() {
         viewModel.viewState.observe(this, Observer {
 
-            recycler_view.show(it is MainViewState.Presenting)
-            loading_icon.show(it is MainViewState.Loading)
-            network_error_tv.show(it is Error)
+            recycler_view.show(it is Presenting)
+            loading_icon.show(it is Loading)
+            network_error_tv.show(it is Erroring)
             location_button.show(it is LocationPermitted || it is LocationNotPermitted)
 
             when (it) {
-                is MainViewState.Presenting -> {
+                is Presenting -> {
                     adapter.setData(it.restaurant)
                     terminateLocationSubscription()
                 }
-                is MainViewState.Error -> network_error_tv.text = it.message.toString()
+                is Erroring -> network_error_tv.text = it.message.toString()
                 is LocationPermitted -> fetchUserLocation()
                 is LocationNotPermitted -> requestLocationPermissions()
             }

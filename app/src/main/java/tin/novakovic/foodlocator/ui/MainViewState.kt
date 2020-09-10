@@ -7,13 +7,13 @@ sealed class MainViewState {
 
     data class Presenting(val restaurant: List<Restaurant>) : MainViewState()
 
-    data class Error(@StringRes val message: Int = 0) : MainViewState()
+    data class Erroring(@StringRes val message: Int) : MainViewState()
 
     object Loading : MainViewState()
 
 }
 
-sealed class LocationState: MainViewState() {
+sealed class LocationState : MainViewState() {
 
     object LocationPermitted : LocationState()
 
