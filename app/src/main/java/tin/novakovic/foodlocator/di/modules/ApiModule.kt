@@ -8,7 +8,7 @@ import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
-import tin.novakovic.foodlocator.core.data_layer.JustEatApi
+import tin.novakovic.foodlocator.data.JustEatApi
 
 @Module
 class ApiModule {

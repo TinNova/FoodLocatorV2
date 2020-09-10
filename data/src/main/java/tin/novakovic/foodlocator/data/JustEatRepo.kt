@@ -1,7 +1,6 @@
-package tin.novakovic.foodlocator.core.data_layer
+package tin.novakovic.foodlocator.data
 
 import io.reactivex.Single
-import tin.novakovic.foodlocator.core.domain_layer.RestaurantResponse
 import javax.inject.Inject
 
 class JustEatRepo @Inject constructor(private val justEatApi: JustEatApi) {

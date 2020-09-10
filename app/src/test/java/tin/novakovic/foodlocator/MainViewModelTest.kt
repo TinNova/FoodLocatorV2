@@ -13,8 +13,8 @@ import org.junit.Rule
 import org.junit.Test
 import org.mockito.Mock
 import org.mockito.MockitoAnnotations
-import tin.novakovic.foodlocator.core.user_case_layer.Restaurant
-import tin.novakovic.foodlocator.core.user_case_layer.RestaurantHelper
+import tin.novakovic.foodlocator.domain.Restaurant
+import tin.novakovic.foodlocator.domain.RestaurantHelper
 import tin.novakovic.foodlocator.ui.*
 
 class MainViewModelUnitTest {

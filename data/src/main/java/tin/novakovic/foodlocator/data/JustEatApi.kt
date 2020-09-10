@@ -1,10 +1,9 @@
-package tin.novakovic.foodlocator.core.data_layer
+package tin.novakovic.foodlocator.data
 
 import io.reactivex.Single
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query
-import tin.novakovic.foodlocator.core.domain_layer.RestaurantResponse
 
 interface JustEatApi {
 

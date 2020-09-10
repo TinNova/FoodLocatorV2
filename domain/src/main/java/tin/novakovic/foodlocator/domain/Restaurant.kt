@@ -1,4 +1,4 @@
-package tin.novakovic.foodlocator.core.user_case_layer
+package tin.novakovic.foodlocator.domain
 
 data class Restaurant(
     val name: String = "",

@@ -1,8 +1,8 @@
-package tin.novakovic.foodlocator.core.user_case_layer
+package tin.novakovic.foodlocator.domain
 
 import io.reactivex.Single
-import tin.novakovic.foodlocator.core.data_layer.JustEatRepo
-import tin.novakovic.foodlocator.core.domain_layer.OldRestaurant
+import tin.novakovic.foodlocator.data.JustEatRepo
+import tin.novakovic.foodlocator.data.OldRestaurant
 import javax.inject.Inject
 
 class RestaurantHelper @Inject constructor(private val justEatRepo: JustEatRepo) {

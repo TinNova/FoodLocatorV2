@@ -1,7 +1,7 @@
 package tin.novakovic.foodlocator.ui
 
 import androidx.annotation.StringRes
-import tin.novakovic.foodlocator.core.user_case_layer.Restaurant
+import tin.novakovic.foodlocator.domain.Restaurant
 
 sealed class MainViewState {
 

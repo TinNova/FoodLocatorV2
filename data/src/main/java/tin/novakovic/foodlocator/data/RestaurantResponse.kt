@@ -1,4 +1,4 @@
-package tin.novakovic.foodlocator.core.domain_layer
+package tin.novakovic.foodlocator.data
 import com.google.gson.annotations.SerializedName
 
 

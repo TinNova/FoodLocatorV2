@@ -5,8 +5,8 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import tin.novakovic.foodlocator.DisposingViewModel
 import tin.novakovic.foodlocator.R
-import tin.novakovic.foodlocator.core.user_case_layer.RestaurantHelper
-import tin.novakovic.foodlocator.core.user_case_layer.Restaurant
+import tin.novakovic.foodlocator.domain.RestaurantHelper
+import tin.novakovic.foodlocator.domain.Restaurant
 import tin.novakovic.foodlocator.removeWhiteSpaces
 import tin.novakovic.foodlocator.ui.LocationState.*
 import tin.novakovic.foodlocator.ui.MainViewState.*

@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.item_restaurant.view.*
 import tin.novakovic.foodlocator.R
-import tin.novakovic.foodlocator.core.user_case_layer.Restaurant
+import tin.novakovic.foodlocator.domain.Restaurant
 import tin.novakovic.foodlocator.ui.MainAdapter.*
 
 class MainAdapter :

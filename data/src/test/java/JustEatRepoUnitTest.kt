@@ -6,9 +6,9 @@ import org.junit.Before
 import org.junit.Test
 import org.mockito.Mock
 import org.mockito.MockitoAnnotations
-import tin.novakovic.foodlocator.core.data_layer.JustEatApi
-import tin.novakovic.foodlocator.core.data_layer.JustEatRepo
-import tin.novakovic.foodlocator.core.domain_layer.RestaurantResponse
+import tin.novakovic.foodlocator.data.JustEatApi
+import tin.novakovic.foodlocator.data.JustEatRepo
+import tin.novakovic.foodlocator.data.RestaurantResponse
 
 class JustEatRepoUnitTest {
 
