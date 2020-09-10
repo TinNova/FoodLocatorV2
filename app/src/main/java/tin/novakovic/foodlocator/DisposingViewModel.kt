@@ -9,14 +9,14 @@ import io.reactivex.disposables.Disposable
 
 abstract class DisposingViewModel : ViewModel(), LifecycleObserver {
 
-    val compositeDisposable: CompositeDisposable by lazy { CompositeDisposable() }
+    private val compositeDisposable: CompositeDisposable by lazy { CompositeDisposable() }
 
     protected fun add(disposable: Disposable) {
         compositeDisposable.add(disposable)
     }
 
-    @OnLifecycleEvent(Lifecycle.Event.ON_DESTROY)
-    fun cleanUp() {
+    override fun onCleared() {
+        super.onCleared()
         compositeDisposable.clear()
     }
 }
