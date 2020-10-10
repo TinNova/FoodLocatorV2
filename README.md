@@ -29,7 +29,7 @@ The Architecture follows Uncle Bob's Clean Architecture in the background layer 
 
 It is not necessary to have a separate module for each layer, but I've used it as it maintains strict coding discipline as an app grows as it creates a clear dependency chain.
 
-<img src="https://media.giphy.com/media/MbG90zAlZmTSLvZF0A/giphy.gif" width="260" align="centre" hspace="20">
+<img src="https://github.com/TinNova/FoodLocator/blob/master/App%20Modules.png?raw=true" width="720" align="center" hspace="20">
 
 ### Tests
 - Unit Tests
