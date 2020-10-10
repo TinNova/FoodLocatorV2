@@ -25,11 +25,11 @@ This one-page app utilises a third-party api to display a list of restaurants ba
   
   
 ## Architecture
+<img src="https://github.com/TinNova/FoodLocator/blob/master/App%20Modules.png?raw=true" width="500" align="right" hspace="20">
+
 The Architecture follows Uncle Bob's Clean Architecture in the background layer with three modules, App, Data and Domain. The presentation layer i.e the App module uses the MVVM pattern with LiveData as recommended by Google.
 
 It is not necessary to have a separate module for each layer, but I've used it as it maintains strict coding discipline as an app grows as it creates a clear dependency chain.
-
-<img src="https://github.com/TinNova/FoodLocator/blob/master/App%20Modules.png?raw=true" width="720" align="center" hspace="20">
 
 ### Tests
 - Unit Tests
