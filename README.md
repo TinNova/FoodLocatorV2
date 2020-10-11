@@ -36,23 +36,23 @@ The App Module acts as the Presentation layer in this application, this layer is
 
 ##### App Module Presentation Layer Components:
 * Activity & RecycerView Adapter
-* ViewModel 
+* ViewModel   
   * DisposingViewModel (A class the viewModel inherits which handles the disposal of Rx Disposables in a lifecycle aware fashion)
 * ViewState (A sealed class which defines the state of the Activity, the state is delivered via the LiveData)
 
 ##### App Module General Components:
-* Dependency Injection
+* Dependency Injection  
   * Retrofit configuration
 * App Permissions
 * Extension Functions
 
 #### Domain Module/Layer
-This acts as the core layer of the app containing all of the business logic. It is important to keep the Domain Layer seperate from the others, this seperation ensures that any UI changes done in the Presentation Layer or Database changes in the Core Layer will not affect the Domain Layer, this ideally means that there will be no code change in the Domain Layer as a result.
+This acts as the core layer of the app containing all of the business logic. It is important to keep the Domain Layer separate from the others, this separation ensures that any UI changes done in the Presentation Layer or Database changes in the Core Layer will not affect the Domain Layer, this ideally means that there will be no code change in the Domain Layer as a result.
 
 ##### Domain Module/Layer Components:
-* DomainModel (in this case called "Restuarant", it is a model as required by the Presentation layer to display content to the user)
+* DomainModel (in this case called "Restaurant", it is a model as required by the Presentation layer to display content to the user)
 * UseCase (in this case called "RestaurantHelper", it contains the business logic for the app, in this example it maps the data from the data layer into the Restaurant Model)
-* Respository Interface (in this case it has been omitted as the app is so simple, but this is generally recommended to create seperation between the domain and data layer)
+* Repository Interface (in this case it has been omitted as the app is so simple, but this is generally recommended to create separation between the domain and data layer)
 
 #### Data Module/Layer
 This layer is responsible for handling data from the network or database.
@@ -60,6 +60,8 @@ This layer is responsible for handling data from the network or database.
 ##### Data Module/Layer Components:
 * API (handles the retrofit service)
 * Repo (handles exposing data to the Domain Layer)
-* Restaurant Reposnse (is the original response mapped out, only a fraction of the model is required, but all of it was kept just to display what could be used)
+* Restaurant Response (is the original response mapped out, only a fraction of the model is required, but all of it was kept just to display what could be used)
 
 ### Data Flow
+The below diagram shows the data flow when loading restaurants via a user inputted postcode<img src="https://github.com/TinNova/FoodLocator/blob/master/FoodLocator%20Flow.png?raw=true" width="1600" align="centre" hspace="20">
+
