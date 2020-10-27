@@ -16,6 +16,8 @@ import org.mockito.MockitoAnnotations
 import tin.novakovic.foodlocator.domain.Restaurant
 import tin.novakovic.foodlocator.domain.RestaurantHelper
 import tin.novakovic.foodlocator.ui.*
+import tin.novakovic.foodlocator.ui.LocationState.*
+import tin.novakovic.foodlocator.ui.MainViewState.*
 
 class MainViewModelUnitTest {
 
@@ -78,7 +80,7 @@ class MainViewModelUnitTest {
 
         //then
         assertEquals(
-            Error(R.string.empty_restaurant_list), target.viewState.value
+            Erroring(R.string.empty_restaurant_list), target.viewState.value
         )
     }
 
@@ -97,7 +99,7 @@ class MainViewModelUnitTest {
 
         //then
         assertEquals(
-            Error(R.string.network_error), target.viewState.value
+            Erroring(R.string.network_error), target.viewState.value
         )
     }
 
@@ -111,7 +113,7 @@ class MainViewModelUnitTest {
 
         //then
         assertEquals(
-            Error(R.string.postcode_error), target.viewState.value
+            Erroring(R.string.postcode_error), target.viewState.value
         )
     }
 
@@ -151,7 +153,7 @@ class MainViewModelUnitTest {
 
         //then
         assertEquals(
-            Error(R.string.empty_restaurant_list), target.viewState.value
+            Erroring(R.string.empty_restaurant_list), target.viewState.value
         )
     }
 
@@ -170,7 +172,7 @@ class MainViewModelUnitTest {
 
         //then
         assertEquals(
-            Error(R.string.network_error), target.viewState.value
+            Erroring(R.string.network_error), target.viewState.value
         )
     }
 
@@ -182,7 +184,7 @@ class MainViewModelUnitTest {
 
         //then
         assertEquals(
-            Error(R.string.location_error), target.viewState.value
+            Erroring(R.string.location_error), target.viewState.value
         )
     }
 
@@ -194,7 +196,7 @@ class MainViewModelUnitTest {
 
         //then
         assertEquals(
-            Error(R.string.location_permission_error), target.viewState.value
+            Erroring(R.string.location_permission_error), target.viewState.value
         )
     }
 
