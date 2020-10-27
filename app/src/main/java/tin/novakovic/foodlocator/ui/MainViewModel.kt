@@ -1,10 +1,9 @@
 package tin.novakovic.foodlocator.ui
 
 import androidx.lifecycle.MutableLiveData
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.schedulers.Schedulers
 import tin.novakovic.foodlocator.DisposingViewModel
 import tin.novakovic.foodlocator.R
+import tin.novakovic.foodlocator.SchedulerProvider
 import tin.novakovic.foodlocator.domain.RestaurantHelper
 import tin.novakovic.foodlocator.domain.Restaurant
 import tin.novakovic.foodlocator.removeWhiteSpaces
@@ -12,7 +11,9 @@ import tin.novakovic.foodlocator.ui.LocationState.*
 import tin.novakovic.foodlocator.ui.MainViewState.*
 import javax.inject.Inject
 
-class MainViewModel @Inject constructor(private val restaurantHelper: RestaurantHelper) :
+class MainViewModel @Inject constructor(
+    private val schedulerProvider: SchedulerProvider,
+    private val restaurantHelper: RestaurantHelper) :
     DisposingViewModel() {
 
     val viewState = MutableLiveData<MainViewState>()
@@ -43,8 +44,8 @@ class MainViewModel @Inject constructor(private val restaurantHelper: Restaurant
         viewState.value = Loading
         add(
             restaurantHelper.fetchRestaurantsByLatLon(latitude, longitude)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(schedulerProvider.io())
+                .observeOn(schedulerProvider.ui())
                 .subscribe({
                     onRestaurantsLoaded(it)
                 }, {
@@ -57,8 +58,8 @@ class MainViewModel @Inject constructor(private val restaurantHelper: Restaurant
         viewState.value = Loading
         add(
             restaurantHelper.fetchRestaurantsByOutCode(outCode)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(schedulerProvider.io())
+                .observeOn(schedulerProvider.ui())
                 .subscribe({
                     onRestaurantsLoaded(it)
                 }, {

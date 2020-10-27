@@ -5,7 +5,9 @@ import tin.novakovic.foodlocator.data.JustEatRepo
 import tin.novakovic.foodlocator.data.OldRestaurant
 import javax.inject.Inject
 
-class RestaurantHelper @Inject constructor(private val justEatRepo: JustEatRepo) {
+class RestaurantHelper @Inject constructor(
+    private val justEatRepo: JustEatRepo
+) {
 
     fun fetchRestaurantsByOutCode(outCode: String): Single<List<Restaurant>> =
         justEatRepo.fetchRestaurantsByOutCode(outCode)

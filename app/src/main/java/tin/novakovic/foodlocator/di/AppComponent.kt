@@ -6,10 +6,11 @@ import dagger.Component
 import tin.novakovic.foodlocator.ui.MainActivity
 import tin.novakovic.foodlocator.di.modules.ApiModule
 import tin.novakovic.foodlocator.di.modules.AppModule
+import tin.novakovic.foodlocator.di.modules.SchedulersModule
 import javax.inject.Singleton
 
 @Singleton
-@Component(modules = [AppModule::class, ApiModule::class])
+@Component(modules = [AppModule::class, ApiModule::class, SchedulersModule::class])
 interface AppComponent {
 
     @Component.Factory

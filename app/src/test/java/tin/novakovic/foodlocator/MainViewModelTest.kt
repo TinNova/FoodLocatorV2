@@ -4,11 +4,8 @@ import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.nhaarman.mockitokotlin2.mock
 import com.nhaarman.mockitokotlin2.whenever
 import io.reactivex.Single
-import io.reactivex.android.plugins.RxAndroidPlugins
-import io.reactivex.schedulers.Schedulers
 import junit.framework.Assert.assertEquals
 import org.junit.Before
-import org.junit.ClassRule
 import org.junit.Rule
 import org.junit.Test
 import org.mockito.Mock
@@ -25,14 +22,10 @@ class MainViewModelUnitTest {
     @JvmField
     val rule = InstantTaskExecutorRule()
 
-    companion object {
-        @ClassRule
-        @JvmField
-        val schedulers = RxImmediateSchedulerRule()
-    }
-
     @Mock
     lateinit var mockRestaurantHelper: RestaurantHelper
+
+    private val testSchedulerProvider = TestSchedulerProviderImpl()
 
     private lateinit var target: MainViewModel
 
@@ -40,8 +33,7 @@ class MainViewModelUnitTest {
     @Throws(Exception::class)
     fun setUp() {
         MockitoAnnotations.initMocks(this)
-        RxAndroidPlugins.setInitMainThreadSchedulerHandler { Schedulers.trampoline() }
-        target = MainViewModel(mockRestaurantHelper)
+        target = MainViewModel(testSchedulerProvider, mockRestaurantHelper)
     }
 
     @Test
