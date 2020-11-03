@@ -1,5 +1,6 @@
 package tin.novakovic.foodlocator
 
+import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.LargeTest
 import androidx.test.rule.ActivityTestRule
@@ -12,13 +13,12 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import tin.novakovic.foodlocator.ui.MainActivity
 
-@LargeTest
+
 @RunWith(AndroidJUnit4::class)
 class MainActivityEspressoTest {
 
-    @Rule
-    @JvmField
-    var mainActivityTestRule = ActivityTestRule(MainActivity::class.java)
+    @get:Rule
+    val activityRule = ActivityScenarioRule(MainActivity::class.java)
 
     @Test
     fun clickSearchButton_emptySearchBar_displayError() {
