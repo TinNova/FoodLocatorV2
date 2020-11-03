@@ -1,8 +1,7 @@
 package tin.novakovic.foodlocator
 
-import io.reactivex.Scheduler
+import io.reactivex.Single
 
 interface SchedulerProvider {
-    fun io(): Scheduler
-    fun ui(): Scheduler
+    fun <T> getSchedulers(): (Single<T>) -> Single<T>
 }

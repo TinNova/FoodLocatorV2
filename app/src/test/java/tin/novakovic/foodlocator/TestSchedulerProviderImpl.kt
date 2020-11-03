@@ -1,10 +1,15 @@
 package tin.novakovic.foodlocator
 
-import io.reactivex.Scheduler
+import io.reactivex.Single
 import io.reactivex.schedulers.Schedulers
 
-class TestSchedulerProviderImpl :
-    SchedulerProvider {
-    override fun io(): Scheduler = Schedulers.trampoline()
-    override fun ui(): Scheduler = Schedulers.trampoline()
+class TestSchedulerProviderImpl : SchedulerProvider {
+
+    override fun <T> getSchedulers(): (Single<T>) -> Single<T> {
+        return {
+            it
+                .subscribeOn(Schedulers.trampoline())
+                .observeOn(Schedulers.trampoline())
+        }
+    }
 }

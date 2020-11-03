@@ -44,8 +44,7 @@ class MainViewModel @Inject constructor(
         viewState.value = Loading
         add(
             restaurantHelper.fetchRestaurantsByLatLon(latitude, longitude)
-                .subscribeOn(schedulerProvider.io())
-                .observeOn(schedulerProvider.ui())
+                .compose(schedulerProvider.getSchedulers())
                 .subscribe({
                     onRestaurantsLoaded(it)
                 }, {
@@ -58,8 +57,7 @@ class MainViewModel @Inject constructor(
         viewState.value = Loading
         add(
             restaurantHelper.fetchRestaurantsByOutCode(outCode)
-                .subscribeOn(schedulerProvider.io())
-                .observeOn(schedulerProvider.ui())
+                .compose(schedulerProvider.getSchedulers())
                 .subscribe({
                     onRestaurantsLoaded(it)
                 }, {
