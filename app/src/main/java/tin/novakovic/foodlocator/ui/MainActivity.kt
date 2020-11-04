@@ -86,7 +86,7 @@ class MainActivity : AppCompatActivity() {
                     adapter.setData(it.restaurant)
                     terminateLocationSubscription()
                 }
-                is Erroring -> network_error_tv.text = it.message.toString()
+                is Erroring -> network_error_tv.text = resources.getString(it.message)
                 is LocationPermitted -> fetchUserLocation()
                 is LocationNotPermitted -> requestLocationPermissions()
             }
