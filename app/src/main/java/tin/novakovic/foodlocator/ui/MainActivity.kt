@@ -24,35 +24,10 @@ class MainActivity : AppCompatActivity() {
     private val viewModel: MainViewModel by viewModel()
     private val adapter: MainAdapter by inject()
 
-    private lateinit var fusedLocationClient: FusedLocationProviderClient
-    private lateinit var locationRequest: LocationRequest
-    private lateinit var locationCallback: LocationCallback
-
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
-
-        locationCallback = object : LocationCallback() {
-            override fun onLocationResult(locationResult: LocationResult?) {
-                super.onLocationResult(locationResult)
-
-                locationResult?.let {
-                    viewModel.onLocationResultSuccess(
-                        it.lastLocation.latitude,
-                        it.lastLocation.longitude
-                    )
-                }
-            }
-        }
-
-        initView()
-
-    }
-
-    private fun initView() {
         observeViewState()
         recycler_view.adapter = adapter
         recycler_view.layoutManager = LinearLayoutManager(
@@ -75,15 +50,11 @@ class MainActivity : AppCompatActivity() {
             recycler_view.show(it is Presenting)
             loading_icon.show(it is Loading)
             network_error_tv.show(it is Erroring)
-            location_button.show(it is LocationPermitted || it is LocationNotPermitted)
+            location_button.show(it !is Presenting || it is LocationNotPermitted)
 
             when (it) {
-                is Presenting -> {
-                    adapter.setData(it.restaurant)
-                    terminateLocationSubscription()
-                }
+                is Presenting -> adapter.setData(it.restaurant)
                 is Erroring -> network_error_tv.text = resources.getString(it.message)
-                is LocationPermitted -> fetchUserLocation()
                 is LocationNotPermitted -> requestLocationPermissions()
             }
         })
@@ -104,22 +75,6 @@ class MainActivity : AppCompatActivity() {
         )
     }
 
-    private fun fetchUserLocation() {
-        locationRequest = LocationRequest().apply {
-            priority = LocationRequest.PRIORITY_HIGH_ACCURACY
-            interval = TimeUnit.SECONDS.toMillis(1)
-            numUpdates = 1
-
-        }
-        locationRequest.interval
-
-        fusedLocationClient.requestLocationUpdates(
-            locationRequest,
-            locationCallback,
-            Looper.myLooper()
-        )
-    }
-
     override fun onRequestPermissionsResult(
         requestCode: Int,
         permissions: Array<String>,
@@ -129,17 +84,13 @@ class MainActivity : AppCompatActivity() {
             REQUEST_FOREGROUND_ONLY_PERMISSIONS_REQUEST_CODE -> when {
 
                 grantResults.isEmpty() -> viewModel.onLocationError()
-                grantResults[0] == PackageManager.PERMISSION_GRANTED -> viewModel.onLocationPermissionGranted()
+                grantResults[0] == PackageManager.PERMISSION_GRANTED -> viewModel.getLocation()
 
                 else -> {
                     viewModel.onLocationPermissionError()
                 }
             }
         }
-    }
-
-    private fun terminateLocationSubscription() {
-        fusedLocationClient.removeLocationUpdates(locationCallback)
     }
 
     companion object {

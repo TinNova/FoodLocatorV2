@@ -1,9 +1,10 @@
 package tin.novakovic.foodlocator.ui
 
 import androidx.lifecycle.MutableLiveData
-import tin.novakovic.foodlocator.DisposingViewModel
+import tin.novakovic.foodlocator.common.DisposingViewModel
 import tin.novakovic.foodlocator.R
-import tin.novakovic.foodlocator.SchedulerProvider
+import tin.novakovic.foodlocator.common.SchedulerProvider
+import tin.novakovic.foodlocator.domain.LocationHelper
 import tin.novakovic.foodlocator.domain.RestaurantHelper
 import tin.novakovic.foodlocator.domain.Restaurant
 import tin.novakovic.foodlocator.removeWhiteSpaces
@@ -12,7 +13,8 @@ import tin.novakovic.foodlocator.ui.MainViewState.*
 
 class MainViewModel(
     private val schedulerProvider: SchedulerProvider,
-    private val restaurantHelper: RestaurantHelper
+    private val restaurantHelper: RestaurantHelper,
+    private val locationHelper: LocationHelper
 ) :
     DisposingViewModel() {
 
@@ -30,15 +32,25 @@ class MainViewModel(
 
     fun onLocationButtonClicked(isLocationPermissionApproved: Boolean) {
         if (isLocationPermissionApproved) {
-            viewState.value = LocationPermitted
+            getLocation()
         } else {
             viewState.value = LocationNotPermitted
         }
     }
 
-    fun onLocationPermissionGranted() {
-        viewState.value = LocationPermitted
+    fun getLocation() {
+        viewState.value = Loading
+        add(
+            locationHelper.getLocation()
+                .compose(schedulerProvider.getSchedulers())
+                .subscribe({
+                    onLocationResultSuccess(it.latitude, it.longitude)
+                }, {
+                    onLocationError()
+                })
+        )
     }
+
 
     fun onLocationResultSuccess(latitude: Double, longitude: Double) {
         viewState.value = Loading
@@ -48,7 +60,7 @@ class MainViewModel(
                 .subscribe({
                     onRestaurantsLoaded(it)
                 }, {
-                    onError(R.string.network_error)
+                    Erroring(R.string.network_error)
                 })
         )
     }
@@ -61,21 +73,21 @@ class MainViewModel(
                 .subscribe({
                     onRestaurantsLoaded(it)
                 }, {
-                    onError(R.string.network_error)
+                    Erroring(R.string.network_error)
                 })
         )
     }
 
     fun onLocationError() {
-        onError(R.string.location_error)
+        Erroring(R.string.location_error)
     }
 
     fun onLocationPermissionError() {
-        onError(R.string.location_permission_error)
+        Erroring(R.string.location_permission_error)
     }
 
     private fun onRestaurantsLoaded(it: List<Restaurant>) {
-        if (it.isEmpty()) onError(R.string.empty_restaurant_list)
+        if (it.isEmpty()) Erroring(R.string.empty_restaurant_list)
         else viewState.value = Presenting(it)
     }
 
