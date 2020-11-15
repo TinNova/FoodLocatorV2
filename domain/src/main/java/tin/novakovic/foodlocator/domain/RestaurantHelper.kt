@@ -5,10 +5,8 @@ import io.reactivex.SingleTransformer
 import tin.novakovic.foodlocator.data.JustEatRepo
 import tin.novakovic.foodlocator.data.OldRestaurant
 import tin.novakovic.foodlocator.data.RestaurantResponse
-import javax.inject.Inject
 
-
-class RestaurantHelper @Inject constructor(
+class RestaurantHelper(
     private val justEatRepo: JustEatRepo
 ) {
 

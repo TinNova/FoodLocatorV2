@@ -9,11 +9,11 @@ import tin.novakovic.foodlocator.domain.Restaurant
 import tin.novakovic.foodlocator.removeWhiteSpaces
 import tin.novakovic.foodlocator.ui.LocationState.*
 import tin.novakovic.foodlocator.ui.MainViewState.*
-import javax.inject.Inject
 
-class MainViewModel @Inject constructor(
+class MainViewModel(
     private val schedulerProvider: SchedulerProvider,
-    private val restaurantHelper: RestaurantHelper) :
+    private val restaurantHelper: RestaurantHelper
+) :
     DisposingViewModel() {
 
     val viewState = MutableLiveData<MainViewState>()

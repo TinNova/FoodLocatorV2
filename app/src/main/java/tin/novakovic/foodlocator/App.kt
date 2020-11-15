@@ -1,16 +1,24 @@
 package tin.novakovic.foodlocator
 
 import android.app.Application
-import tin.novakovic.foodlocator.di.AppComponent
-import tin.novakovic.foodlocator.di.DaggerAppComponent
+import org.koin.android.ext.koin.androidContext
+import org.koin.android.ext.koin.androidLogger
+import org.koin.core.context.startKoin
+import tin.novakovic.foodlocator.di.applicationModule
 
-open class App : Application() {
+class App : Application() {
 
-    val appComponent: AppComponent by lazy {
-        initializeComponent()
-    }
+    override fun onCreate() {
+        super.onCreate()
 
-    open fun initializeComponent(): AppComponent {
-        return DaggerAppComponent.factory().create(applicationContext)
+        startKoin {
+            // Koin Android logger
+            androidLogger()
+            //inject Android context
+            androidContext(this@App)
+            // use modules
+            modules(applicationModule)
+        }
+
     }
 }

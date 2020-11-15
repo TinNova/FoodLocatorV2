@@ -1,8 +1,5 @@
-package tin.novakovic.foodlocator.di.modules
+package tin.novakovic.foodlocator.di
 
-import dagger.Module
-import dagger.Provides
-import dagger.Reusable
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -10,12 +7,16 @@ import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 import tin.novakovic.foodlocator.data.JustEatApi
 
-@Module
-class ApiModule {
+object RetrofitFactory {
 
-    @Provides
-    @Reusable
-    fun providesRetrofit(okHttpClient: OkHttpClient.Builder): JustEatApi =
+    fun makeRetrofitService(): JustEatApi {
+        val okHttpClient = makeOkHttpClient()
+        val retrofit = makeRetrofit(okHttpClient)
+
+        return retrofit.create(JustEatApi::class.java)
+    }
+
+    private fun makeRetrofit(okHttpClient: OkHttpClient.Builder): Retrofit =
         Retrofit.Builder()
             .baseUrl("https://uk.api.just-eat.io/")
             .client(okHttpClient
@@ -24,11 +25,8 @@ class ApiModule {
             .addConverterFactory(GsonConverterFactory.create())
             .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
             .build()
-            .create(JustEatApi::class.java)
 
-    @Provides
-    @Reusable
-    fun providesOkHttpClient(): OkHttpClient.Builder =
+    private fun makeOkHttpClient(): OkHttpClient.Builder =
         OkHttpClient.Builder()
             .addInterceptor(HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY))
 

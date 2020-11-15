@@ -72,9 +72,10 @@ dependencies {
     // Picasso
     implementation "com.squareup.picasso:picasso:$version_picasso"
 
-    // dagger2
-    implementation "com.google.dagger:dagger:$version_dagger"
-    kapt "com.google.dagger:dagger-compiler:$version_dagger"
+    // koin
+    implementation "org.koin:koin-android:$version_koin"
+    implementation "org.koin:koin-android-viewmodel:$version_koin"
+    implementation "org.koin:koin-android-scope:$version_koin"
 
     implementation 'com.google.android.gms:play-services-location:17.0.0'
 

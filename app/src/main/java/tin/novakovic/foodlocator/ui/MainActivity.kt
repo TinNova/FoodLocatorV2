@@ -7,24 +7,22 @@ import android.os.Looper
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.gms.location.*
 import kotlinx.android.synthetic.main.activity_main.*
+import org.koin.android.ext.android.inject
 import tin.novakovic.foodlocator.*
 import tin.novakovic.foodlocator.R
 import tin.novakovic.foodlocator.ui.LocationState.*
 import tin.novakovic.foodlocator.ui.MainViewState.*
 import java.util.concurrent.TimeUnit
-import javax.inject.Inject
+import org.koin.android.viewmodel.ext.android.viewModel
+
 
 class MainActivity : AppCompatActivity() {
 
-    @Inject
-    internal lateinit var viewModelFactory: ViewModelFactory<MainViewModel>
-    private lateinit var viewModel: MainViewModel
-
-    private val adapter = MainAdapter()
+    private val viewModel: MainViewModel by viewModel()
+    private val adapter: MainAdapter by inject()
 
     private lateinit var fusedLocationClient: FusedLocationProviderClient
     private lateinit var locationRequest: LocationRequest
@@ -32,10 +30,8 @@ class MainActivity : AppCompatActivity() {
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        (application as App).appComponent.inject(this)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        viewModel = ViewModelProvider(this, viewModelFactory).get(MainViewModel::class.java)
 
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
 
