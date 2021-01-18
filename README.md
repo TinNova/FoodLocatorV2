@@ -7,7 +7,7 @@ This one-page app utilises a third-party api to display a list of restaurants ba
 <img src="https://media.giphy.com/media/MbG90zAlZmTSLvZF0A/giphy.gif" width="260" align="right" hspace="20">
 
 * Kotlin
-* Dagger 2 (For Dependency Injection)
+* Koin (For Dependency Injection)
 * RxJava (For Managing Background Tasks)
 * Retrofit (For Networking)
 * GSON (For Mapping Json Data)
