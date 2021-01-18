@@ -2,6 +2,7 @@ package tin.novakovic.foodlocator.di
 
 import org.koin.android.viewmodel.dsl.viewModel
 import org.koin.dsl.module
+import tin.novakovic.foodlocator.common.ContextWrapper
 import tin.novakovic.foodlocator.common.LocationDataSource
 import tin.novakovic.foodlocator.data.LocationProvider
 import tin.novakovic.foodlocator.common.SchedulerProvider
@@ -30,6 +31,10 @@ val applicationModule = module {
 
     viewModel {
         MainViewModel(get(), get(), get())
+    }
+
+    single {
+        ContextWrapper(get())
     }
 
     /** Domain Module */
