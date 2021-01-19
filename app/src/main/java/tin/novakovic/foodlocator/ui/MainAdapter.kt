@@ -14,25 +14,31 @@ class MainAdapter :
     RecyclerView.Adapter<RestaurantViewHolder>() {
 
     private var restaurants: List<Restaurant> = listOf()
+    private lateinit var onItemClicked: (Restaurant) -> Unit
 
     fun setData(data: List<Restaurant>) {
         restaurants = data
         notifyDataSetChanged()
     }
 
+    fun clickListener(onItemClicked: (Restaurant) -> Unit) {
+        this.onItemClicked = onItemClicked
+    }
+
     override fun getItemCount(): Int = restaurants.size
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RestaurantViewHolder =
-        RestaurantViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_restaurant, parent, false))
+        RestaurantViewHolder(
+            LayoutInflater.from(parent.context).inflate(R.layout.item_restaurant, parent, false)
+        )
 
     override fun onBindViewHolder(holder: RestaurantViewHolder, position: Int) {
-        holder.bind(restaurants[position])
-
+        holder.bind(restaurants[position], onItemClicked)
     }
 
     class RestaurantViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
-        fun bind(restaurant: Restaurant) {
+        fun bind(restaurant: Restaurant, onItemClicked: (Restaurant) -> Unit) {
 
             itemView.restaurant_name.text = restaurant.name
             itemView.restaurant_foodType.text = restaurant.foodType
@@ -41,7 +47,12 @@ class MainAdapter :
             Picasso.get()
                 .load(restaurant.logo)
                 .into(itemView.restaurant_logo)
+
+            itemView.setOnClickListener {
+                onItemClicked(restaurant)
+            }
         }
+
     }
 
 }

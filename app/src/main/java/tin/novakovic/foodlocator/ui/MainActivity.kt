@@ -3,20 +3,18 @@ package tin.novakovic.foodlocator.ui
 import android.Manifest
 import android.content.pm.PackageManager
 import android.os.Bundle
-import android.os.Looper
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.google.android.gms.location.*
 import kotlinx.android.synthetic.main.activity_main.*
 import org.koin.android.ext.android.inject
-import tin.novakovic.foodlocator.*
-import tin.novakovic.foodlocator.R
-import tin.novakovic.foodlocator.ui.LocationState.*
-import tin.novakovic.foodlocator.ui.MainViewState.*
-import java.util.concurrent.TimeUnit
 import org.koin.android.viewmodel.ext.android.viewModel
+import tin.novakovic.foodlocator.R
+import tin.novakovic.foodlocator.domain.Restaurant
+import tin.novakovic.foodlocator.show
+import tin.novakovic.foodlocator.ui.LocationState.LocationNotPermitted
+import tin.novakovic.foodlocator.ui.MainViewState.*
 
 
 class MainActivity : AppCompatActivity() {
@@ -30,6 +28,7 @@ class MainActivity : AppCompatActivity() {
 
         observeViewState()
         recycler_view.adapter = adapter
+        adapter.clickListener{ onItemClicked(it) }
         recycler_view.layoutManager = LinearLayoutManager(
             this, LinearLayoutManager.VERTICAL, false
         )
@@ -91,6 +90,10 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         }
+    }
+
+    private fun onItemClicked(restaurant: Restaurant) {
+        println("${restaurant.name} clicked")
     }
 
     companion object {
