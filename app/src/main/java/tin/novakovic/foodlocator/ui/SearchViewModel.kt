@@ -9,16 +9,16 @@ import tin.novakovic.foodlocator.domain.RestaurantHelper
 import tin.novakovic.foodlocator.domain.Restaurant
 import tin.novakovic.foodlocator.removeWhiteSpaces
 import tin.novakovic.foodlocator.ui.LocationState.*
-import tin.novakovic.foodlocator.ui.MainViewState.*
+import tin.novakovic.foodlocator.ui.SearchViewState.*
 
-class MainViewModel(
+class SearchViewModel(
     private val schedulerProvider: SchedulerProvider,
     private val restaurantHelper: RestaurantHelper,
     private val locationHelper: LocationHelper
 ) :
     DisposingViewModel() {
 
-    val viewState = MutableLiveData<MainViewState>()
+    val viewState = MutableLiveData<SearchViewState>()
 
     fun onSearchClicked(outCode: String?) {
         outCode.removeWhiteSpaces(2).also {

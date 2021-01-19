@@ -8,9 +8,9 @@ import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.item_restaurant.view.*
 import tin.novakovic.foodlocator.R
 import tin.novakovic.foodlocator.domain.Restaurant
-import tin.novakovic.foodlocator.ui.MainAdapter.*
+import tin.novakovic.foodlocator.ui.SearchAdapter.*
 
-class MainAdapter :
+class SearchAdapter :
     RecyclerView.Adapter<RestaurantViewHolder>() {
 
     private var restaurants: List<Restaurant> = listOf()

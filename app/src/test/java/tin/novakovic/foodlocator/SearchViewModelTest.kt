@@ -14,9 +14,9 @@ import tin.novakovic.foodlocator.domain.Restaurant
 import tin.novakovic.foodlocator.domain.RestaurantHelper
 import tin.novakovic.foodlocator.ui.*
 import tin.novakovic.foodlocator.ui.LocationState.*
-import tin.novakovic.foodlocator.ui.MainViewState.*
+import tin.novakovic.foodlocator.ui.SearchViewState.*
 
-class MainViewModelUnitTest {
+class SearchViewModelUnitTest {
 
     @Rule
     @JvmField
@@ -27,13 +27,13 @@ class MainViewModelUnitTest {
 
     private val testSchedulerProvider = TestSchedulerProviderImpl()
 
-    private lateinit var target: MainViewModel
+    private lateinit var target: SearchViewModel
 
     @Before
     @Throws(Exception::class)
     fun setUp() {
         MockitoAnnotations.initMocks(this)
-        target = MainViewModel(testSchedulerProvider, mockRestaurantHelper)
+        target = SearchViewModel(testSchedulerProvider, mockRestaurantHelper)
     }
 
     @Test

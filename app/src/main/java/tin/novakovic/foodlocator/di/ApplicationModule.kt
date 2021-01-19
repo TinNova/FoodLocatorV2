@@ -11,31 +11,32 @@ import tin.novakovic.foodlocator.data.JustEatRepo
 import tin.novakovic.foodlocator.data.LocationRepo
 import tin.novakovic.foodlocator.domain.LocationHelper
 import tin.novakovic.foodlocator.domain.RestaurantHelper
-import tin.novakovic.foodlocator.ui.MainAdapter
-import tin.novakovic.foodlocator.ui.MainViewModel
+import tin.novakovic.foodlocator.ui.SearchAdapter
+import tin.novakovic.foodlocator.ui.SearchViewModel
 
 val applicationModule = module {
 
     /** App Module*/
     factory {
-        MainAdapter()
+        SearchAdapter()
     }
 
     single<SchedulerProvider> {
         SchedulerProviderImpl()
     }
 
-    single<LocationProvider>{
+    single<LocationProvider> {
         LocationDataSource(get())
     }
 
     viewModel {
-        MainViewModel(get(), get(), get())
+        SearchViewModel(get(), get(), get())
     }
 
     single {
         ContextWrapper(get())
     }
+
 
     /** Domain Module */
     factory {
@@ -45,6 +46,7 @@ val applicationModule = module {
     factory {
         LocationHelper(get())
     }
+
 
     /** Data Module */
     single {
