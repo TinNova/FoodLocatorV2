@@ -10,6 +10,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat.checkSelfPermission
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.fragment_search.*
 import org.koin.android.ext.android.inject
@@ -107,6 +108,7 @@ class SearchFragment : Fragment() {
 
     private fun onItemClicked(restaurant: Restaurant) {
         println("${restaurant.name} clicked")
+        findNavController().navigate(SearchFragmentDirections.actionSearchFragmentToDetailFragment(restaurant))
     }
 
     companion object {

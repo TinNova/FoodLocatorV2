@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <ImageView
+        android:id="@+id/detail_logo"
+        android:layout_width="@dimen/logo_size"
+        android:layout_height="@dimen/logo_size"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_margin="@dimen/margin_small"/>
+
+    <TextView
+        android:id="@+id/detail_name"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/margin_big"
+        android:layout_marginEnd="@dimen/margin_big"
+        android:textSize="@dimen/font_size"
+        android:textStyle="bold"
+        android:maxLines="1"
+        android:ellipsize="end"
+        app:layout_constraintEnd_toStartOf="@+id/detail_rating"
+        app:layout_constraintStart_toEndOf="@id/detail_logo"
+        app:layout_constraintTop_toTopOf="@id/detail_logo"
+        tools:text="Name" />
+
+    <TextView
+        android:id="@+id/detail_foodType"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/margin_big"
+        android:layout_marginEnd="@dimen/margin_big"
+        app:layout_constraintEnd_toStartOf="@+id/detail_rating"
+        app:layout_constraintStart_toEndOf="@+id/detail_logo"
+        app:layout_constraintTop_toBottomOf="@id/detail_name"
+        tools:text="Food Type" />
+
+    <TextView
+        android:id="@+id/detail_rating"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="5.0"
+        android:textSize="@dimen/font_size"
+        android:textStyle="bold"
+        android:layout_marginEnd="@dimen/margin_big"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/detail_logo"
+        app:layout_constraintBottom_toBottomOf="@id/detail_logo"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
