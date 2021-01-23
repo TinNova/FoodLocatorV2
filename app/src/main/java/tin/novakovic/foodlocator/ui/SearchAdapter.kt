@@ -5,8 +5,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.squareup.picasso.Picasso
-import kotlinx.android.synthetic.main.item_restaurant.view.*
 import tin.novakovic.foodlocator.R
+import tin.novakovic.foodlocator.databinding.ItemRestaurantBinding
 import tin.novakovic.foodlocator.domain.Restaurant
 import tin.novakovic.foodlocator.ui.SearchAdapter.*
 
@@ -37,16 +37,17 @@ class SearchAdapter :
     }
 
     class RestaurantViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        private val binding = ItemRestaurantBinding.bind(itemView)
 
         fun bind(restaurant: Restaurant, onItemClicked: (Restaurant) -> Unit) {
 
-            itemView.restaurant_name.text = restaurant.name
-            itemView.restaurant_foodType.text = restaurant.foodType
-            itemView.restaurant_rating.text = restaurant.rating
+            binding.restaurantName.text = restaurant.name
+            binding.restaurantFoodType.text = restaurant.foodType
+            binding.restaurantRating.text = restaurant.rating
 
             Picasso.get()
                 .load(restaurant.logo)
-                .into(itemView.restaurant_logo)
+                .into(binding.restaurantLogo)
 
             itemView.setOnClickListener {
                 onItemClicked(restaurant)

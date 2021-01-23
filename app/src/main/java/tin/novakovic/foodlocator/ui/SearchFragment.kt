@@ -12,10 +12,9 @@ import androidx.core.content.ContextCompat.checkSelfPermission
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import kotlinx.android.synthetic.main.fragment_search.*
 import org.koin.android.ext.android.inject
 import org.koin.android.viewmodel.ext.android.viewModel
-import tin.novakovic.foodlocator.R
+import tin.novakovic.foodlocator.databinding.FragmentSearchBinding
 import tin.novakovic.foodlocator.domain.Restaurant
 import tin.novakovic.foodlocator.show
 
@@ -25,26 +24,32 @@ class SearchFragment : Fragment() {
     private val adapter: SearchAdapter by inject()
     private var mContext: Context? = null
 
+    private var _binding: FragmentSearchBinding? = null
+    private val binding get() = _binding!!
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View = inflater.inflate(R.layout.fragment_search, container, false)
+    ): View {
+        _binding = FragmentSearchBinding.inflate(inflater, container, false)
+        return binding.root
+    }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
         observeViewState()
-        recycler_view.adapter = adapter
+        binding.recyclerView.adapter = adapter
         adapter.clickListener { onItemClicked(it) }
-        recycler_view.layoutManager = LinearLayoutManager(
+        binding.recyclerView.layoutManager = LinearLayoutManager(
             context, LinearLayoutManager.VERTICAL, false
         )
 
-        search_button.setOnClickListener {
-            viewModel.onSearchClicked(search_bar.text.toString())
+        binding.searchButton.setOnClickListener {
+            viewModel.onSearchClicked(binding.searchBar.text.toString())
         }
 
-        location_button.setOnClickListener {
+        binding.locationButton.setOnClickListener {
             viewModel.onLocationButtonClicked(locationPermissionApproved())
         }
 
@@ -60,14 +65,14 @@ class SearchFragment : Fragment() {
     private fun observeViewState() {
         viewModel.viewState.observe(this, Observer {
 
-            recycler_view.show(it is SearchViewState.Presenting)
-            loading_icon.show(it is SearchViewState.Loading)
-            network_error_tv.show(it is SearchViewState.Erroring)
-            location_button.show(it !is SearchViewState.Presenting || it is LocationState.LocationNotPermitted)
+            binding.recyclerView.show(it is SearchViewState.Presenting)
+            binding.loadingIcon.show(it is SearchViewState.Loading)
+            binding.networkErrorTv.show(it is SearchViewState.Erroring)
+            binding.locationButton.show(it !is SearchViewState.Presenting || it is LocationState.LocationNotPermitted)
 
             when (it) {
                 is SearchViewState.Presenting -> adapter.setData(it.restaurant)
-                is SearchViewState.Erroring -> network_error_tv.text =
+                is SearchViewState.Erroring -> binding.networkErrorTv.text =
                     resources.getString(it.message)
                 is LocationState.LocationNotPermitted -> requestLocationPermissions()
             }
@@ -108,7 +113,16 @@ class SearchFragment : Fragment() {
 
     private fun onItemClicked(restaurant: Restaurant) {
         println("${restaurant.name} clicked")
-        findNavController().navigate(SearchFragmentDirections.actionSearchFragmentToDetailFragment(restaurant))
+        findNavController().navigate(
+            SearchFragmentDirections.actionSearchFragmentToDetailFragment(
+                restaurant
+            )
+        )
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 
     companion object {
