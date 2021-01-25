@@ -34,7 +34,7 @@ The Architecture follows Uncle Bob's Clean Architecture in the background layer 
 It is not necessary to have a separate module for each layer, but I've used it as it maintains strict coding discipline as an app grows as it creates a clear dependency chain.
 
 #### App Module
-The App Module acts as the Presentation layer in this application, this layer is the closest to what the user sees on the screen. The App Module is made up of MVVM Architecture pattern using ViewModel and LiveData from the Jetpack components.
+The App Module acts as the Presentation and Framework layer in this application. I've decided to keep them as one layer as I would prefer to have a single Android Module. The presentation layer is the closest to what the user sees on the screen, while the framework layer contains the logic for GPS location and RxSchedulers for switching threads. The App Module is made up of MVVM Architecture pattern using ViewModel and LiveData from the Jetpack components.
 
 ##### App Module Presentation Layer Components:
 * MainActivity which acts as the NavHostFragment & RecycerView Adapter
@@ -53,7 +53,8 @@ The App Module acts as the Presentation layer in this application, this layer is
 * Rx Scheduler Provider
 
 #### Domain Module/Layer
-This acts as the core layer of the app containing all of the business logic. It is important to keep the Domain Layer separate from the others, this separation ensures that any UI changes done in the Presentation Layer or Database changes in the Core Layer will not affect the Domain Layer, this ideally means that there will be no code change in the Domain Layer as a result.
+This contains all of the business logic for the app and all operations are done on a background thread. It is important to keep the Domain Layer separate from the others, this separation ensures that any UI changes done in the Presentation Layer or Database changes in the Core Layer will not affect the Domain Layer, this ideally means that there will be no code change in the Domain Layer as a result.
+I have ommited the usecase layer which is responsible for handling actions a user can trigger as I feel it would bloat the app without providing any value, this layer could be used as the point at which we switch to a background thread, but I prefer to do this in the ViewModel as it ensures that the Kotlin modules (Domain & Data) are accessed only by a background thread, that's cleaner and neater in my opinion.
 
 ##### Domain Module/Layer Components:
 * DomainModel (in this case called "Restaurant", it is a model as required by the Presentation layer to display content to the user)
