@@ -4,39 +4,29 @@ import android.Manifest
 import android.content.Context
 import android.content.pm.PackageManager
 import android.os.Bundle
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.core.content.ContextCompat.checkSelfPermission
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import org.koin.android.ext.android.inject
 import org.koin.android.viewmodel.ext.android.viewModel
+import tin.novakovic.foodlocator.R
+import tin.novakovic.foodlocator.common.view_binding.viewBinding
 import tin.novakovic.foodlocator.databinding.FragmentSearchBinding
 import tin.novakovic.foodlocator.domain.Restaurant
 import tin.novakovic.foodlocator.show
 
-class SearchFragment : Fragment() {
+class SearchFragment : Fragment(R.layout.fragment_search) {
 
     private val viewModel: SearchViewModel by viewModel()
     private val adapter: SearchAdapter by inject()
     private var mContext: Context? = null
+    private val binding by viewBinding(FragmentSearchBinding::bind)
 
-    private var _binding: FragmentSearchBinding? = null
-    private val binding get() = _binding!!
-
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        _binding = FragmentSearchBinding.inflate(inflater, container, false)
-        return binding.root
-    }
-
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
         observeViewState()
         binding.recyclerView.adapter = adapter
@@ -52,14 +42,11 @@ class SearchFragment : Fragment() {
         binding.locationButton.setOnClickListener {
             viewModel.onLocationButtonClicked(locationPermissionApproved())
         }
-
     }
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-
         mContext = context
-
     }
 
     private fun observeViewState() {
@@ -118,11 +105,6 @@ class SearchFragment : Fragment() {
                 restaurant
             )
         )
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
     }
 
     companion object {

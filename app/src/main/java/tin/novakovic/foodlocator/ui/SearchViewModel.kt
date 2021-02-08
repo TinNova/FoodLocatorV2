@@ -15,8 +15,7 @@ class SearchViewModel(
     private val schedulerProvider: SchedulerProvider,
     private val restaurantHelper: RestaurantHelper,
     private val locationHelper: LocationHelper
-) :
-    DisposingViewModel() {
+) : DisposingViewModel() {
 
     val viewState = MutableLiveData<SearchViewState>()
 

@@ -57,6 +57,12 @@ dependencies {
     // ViewModel and LiveData
     implementation "androidx.lifecycle:lifecycle-extensions:$version_lifecycle_extensions"
 
+    // Binding One Liner
+    implementation "androidx.lifecycle:lifecycle-runtime-ktx:$version_lifecycle_extensions"
+    implementation "androidx.lifecycle:lifecycle-common-java8:$version_lifecycle_extensions"
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$version_lifecycle_extensions"
+    implementation "androidx.lifecycle:lifecycle-livedata-ktx:$version_lifecycle_extensions"
+
     // Rx
     implementation "io.reactivex.rxjava2:rxandroid:$version_rxandroid"
     implementation "io.reactivex.rxjava2:rxkotlin:$version_rxkotlin"
