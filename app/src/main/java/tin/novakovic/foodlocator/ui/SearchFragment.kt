@@ -50,12 +50,12 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
     }
 
     private fun observeViewState() {
-        viewModel.viewState.observe(this, Observer {
+        viewModel.viewState.observe(viewLifecycleOwner, Observer {
 
             binding.recyclerView.show(it is SearchViewState.Presenting)
             binding.loadingIcon.show(it is SearchViewState.Loading)
             binding.networkErrorTv.show(it is SearchViewState.Erroring)
-            binding.locationButton.show(it !is SearchViewState.Presenting || it is LocationState.LocationNotPermitted)
+            binding.locationButton.show(it is SearchViewState.Erroring || it is LocationState.LocationNotPermitted)
 
             when (it) {
                 is SearchViewState.Presenting -> adapter.setData(it.restaurant)

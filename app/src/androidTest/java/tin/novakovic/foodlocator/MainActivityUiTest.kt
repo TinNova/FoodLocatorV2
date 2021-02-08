@@ -24,7 +24,7 @@ class MainActivityEspressoTest {
     fun clickSearchButton_emptySearchBar_displayError() {
         clickOn(R.id.search_button)
         assertDisplayed("PostCode Not Recognised")
-        assertNotDisplayed(R.id.location_button);
+        assertDisplayed(R.id.location_button);
     }
 
     @Test
@@ -40,7 +40,7 @@ class MainActivityEspressoTest {
         writeTo(R.id.search_bar, "sw82")
         clickOn(R.id.search_button)
         assertDisplayed("PostCode/Location Not Recognised")
-        assertNotDisplayed(R.id.location_button)
+        assertDisplayed(R.id.location_button)
     }
 
     // Test passes only if location is pre-enabled on the device

@@ -55,11 +55,11 @@
         android:id="@+id/network_error_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/margin_big"
         android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/search_bar"
+        app:layout_constraintTop_toBottomOf="@+id/location_button"
+        android:layout_marginTop="@dimen/margin"
         tools:text="No Internet, try again" />
 
     <androidx.appcompat.widget.AppCompatButton
