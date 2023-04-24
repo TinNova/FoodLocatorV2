@@ -4,11 +4,9 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.location.Location
 import android.os.Looper
-import android.util.Log
 import com.google.android.gms.location.*
 import io.reactivex.BackpressureStrategy
 import io.reactivex.Flowable
-import io.reactivex.Single
 import io.reactivex.subjects.PublishSubject
 import tin.novakovic.foodlocator.data.LocationModel
 import tin.novakovic.foodlocator.data.LocationProvider
